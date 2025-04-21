@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: rgb(56, 73, 73);
+        height: 100vh;
+        width: 100%;
+      }
+      .container {
+        h1 {
+          color: red;
+          text-align: center;
+        }
+      }
+      .midside {
+        /* background-color: yellow; */
+        color: #00ff00;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      .result {
+        color: #03fb03;
+        font-size: 25px;
+      }
+      @media (max-width: 250px) {
+        .result {
+          margin-top: -10px;
+        }
+      }
+      @media (min-width: 350px) {
+        .footerSide {
+          /* background-color: red; */
+          margin-top: 10%;
+        }
+      }
+      @media (min-width: 600px) {
+        .footerSide {
+          /* background-color: rgb(0, 76, 255); */
+          margin-top: 5%;
+        }
+      }
+
+      @media (max-width: 350px) {
+        .footerSide {
+          display: flex;
+          display: inline-block;
+          /* background-color: rgb(51, 121, 71); */
+        }
+        #resultEnd {
+          margin-top: 10px;
+        }
+      }
+      .result1 {
+        text-align: center;
+        color: #00ff00;
+        display: flex;
+        display: inline-;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: -30px;
+      }
+      #resultEnd {
+        color: rgb(255, 0, 0);
+        margin-top: 30px;
+      }
+      .footerSide {
+        display: flex;
+        color: #00ff00;
+        font-size: 15px;
+        font-weight: bold;
+        flex-wrap: wrap;
+        justify-content: center;
+        justify-content: space-evenly;
+        margin-top: 0px;
+      }
+      .imgBox {
+        background-size: cover;
+        border-radius: 50px;
+        /* background-color: rgb(247, 13, 13); */
+        height: 80px;
+        width: 80px;
+      }
+      .textImg {
+        background-size: cover;
+        border-radius: 20px;
+        padding: 15px;
+      }
+      #resetBtn {
+        margin-left: 70%;
+        color: red;
+        background-color: #171b17;
+        font-size: 20px;
+        margin-bottom: 30px;
+      }
+
+      .AttempSize {
+        color: #00ff00;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px;
+        margin-left: 40px;
+      }
+      .xy {
+        color: red;
+        display: flex;
+        display: inline-block;
+      }
+      .pressGuess {
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        color: #00ff00;
+        margin-top: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>| Snake Water Gun |</h1>
+      <div class="midside">
+        <h2>
+          Human
+          <p id="score1">Score : 0</p>
+        </h2>
+        <h3 class="result">Welcome</h3>
+        <h2>
+          Computer
+          <p id="score2">Score : 0</p>
+        </h2>
+      </div>
+      <div class="result1">
+        <p id="turnName">Wait</p>
+        <pre> </pre>
+        <p id="resultEnd">Turn End</p>
+      </div>
+      <p class="pressGuess">Press Any key S G W</p>
+      <div class="footerSide">
+        <div class="imgBox"></div>
+        <div>
+          <img
+            src="sChar.webp"
+            class="textImg"
+            height="50px"
+            width="50px"
+            alt="snake"
+            id="sbtn"
+          />
+          <img
+            src="gChar.webp"
+            class="textImg"
+            height="50px"
+            width="50px"
+            alt="gun"
+            id="gbtn"
+          />
+          <img
+            src="wChar.webp"
+            class="textImg"
+            height="50px"
+            width="50px"
+            alt="water"
+            id="wbtn"
+          />
+        </div>
+        <div class="imgBox" id="imgbox"></div>
+      </div>
+      <div class="AttempSize">
+        <p>Minimum Attempt : 7</p>
+        <p id="attempleft">Attempt : 7</p>
+      </div>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <!--         javascript code here     -->
+
+    <script>
+      var attempLeft = 7;
+      let btnS = document.querySelector("#sbtn");
+      let btng = document.querySelector("#gbtn");
+      let btnw = document.querySelector("#wbtn");
+      let btnReset = document.querySelector("#resetBtn");
+      x = document.querySelector(".result").innerHTML = '<p class="xy">X</p>';
+
+      document.querySelector(".imgBox").style.backgroundImage =
+        'url("gameLogo.webp")';
+      document.querySelector("#imgbox").style.backgroundImage =
+        'url("gameLogo.webp")';
+
+      //////////  Operation container funtion ///////
+
+      var comScore = 0;
+      var humanScore = 0;
+
+      console.log("human score : " + humanScore);
+      console.log("comp score : " + comScore);
+
+      function operateHub(userInput, computerInput1) {
+        ///// user input vs Computer input  //////
+        if (userInput == "snake" && computerInput1 == "water") {
+          console.log("user win");
+          document.querySelector(".result").innerHTML = `Snake ${x} Water`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("snake.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("water.webp")';
+
+          humanScore = humanScore + 5;
+        } else if (userInput == "gun" && computerInput1 == "snake") {
+          console.log("user win ");
+          document.querySelector(".result").innerHTML = `Gun ${x} Snake`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("gun.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("snake.webp")';
+
+          humanScore = humanScore + 5;
+        } else if (userInput == "water" && computerInput1 == "gun") {
+          console.log("user win ");
+          document.querySelector(".result").innerHTML = `Water ${x} Gun`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("water.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("gun.webp")';
+
+          humanScore = humanScore + 5;
+        }
+
+        /////  Computer input vs user input ///////
+        else if (computerInput1 == "snake" && userInput == "water") {
+          console.log("computer win ");
+          document.querySelector(".result").innerHTML = `Water ${x} Snake`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("water.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("snake.webp")';
+
+          comScore = comScore + 5;
+        } else if (computerInput1 == "gun" && userInput == "snake") {
+          console.log("computer win");
+          document.querySelector(".result").innerHTML = `Snake ${x} Gun`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("snake.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("gun.webp")';
+          comScore = comScore + 5;
+        } else if (computerInput1 == "water" && userInput == "gun") {
+          console.log("computer win ");
+          document.querySelector(".result").innerHTML = `Gun ${x} Water`;
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("gun.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("water.webp")';
+          comScore = comScore + 5;
+        }
+
+        ////// Draw part  /////////
+        else if (userInput == "snake" && computerInput1 == "snake") {
+          document.querySelector(".result").innerText = "Both Same";
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("snake.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("snake.webp")';
+          console.log("match draw");
+        } else if (userInput == "water" && computerInput1 == "water") {
+          document.querySelector(".result").innerText = "Both Same";
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("water.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("water.webp")';
+          console.log("match draw");
+        } else if (userInput == "gun" && computerInput1 == "gun") {
+          document.querySelector(".result").innerText = "Both Same";
+          document.querySelector(".imgBox").style.backgroundImage =
+            'url("gun.webp")';
+          document.querySelector("#imgbox").style.backgroundImage =
+            'url("gun.webp")';
+          console.log("match draw");
+        } else {
+          console.log("please select any one this option ");
+        }
+      }
+
+      //////////////function end ////////
+
+      var pressCountS = 0;
+      var pressCountG = 0;
+      var pressCountW = 0;
+      var pressCount;
+
+      btnS.addEventListener("click", (evt) => {
+        console.log("press count S : " + pressCountS);
+        document.querySelector("#score1").innerText = " Score : " + humanScore;
+        document.querySelector("#score2").innerText = "score : " + comScore;
+        if (pressCountS == 0) {
+          step1click();
+        } else if (pressCountS == 1) {
+          document.querySelector(".pressGuess").innerText = "You press S ";
+          pressCountS++;
+          pressCount += 1;
+          add(pressCount);
+        } else {
+          document.querySelector(".pressGuess").innerText =
+            "You press S \n " + pressCountS + " times ";
+          pressCountS++;
+          pressCount += 1;
+          add(pressCount);
+          console.log("press coutn : " + pressCount);
+        }
+        resetFun();
+        document.querySelector("#attempleft").innerText =
+          " Attemp left : " + attempLeft;
+        --attempLeft;
+        console.log(pressCountS);
+
+        var cpu = Math.floor(Math.random() * 10);
+        var computerInput = [
+          "snake",
+          "water",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+        ][cpu];
+
+        console.log(" user : press s  ");
+        console.log("cpu input : " + computerInput);
+        operateHub("snake", computerInput);
+      });
+
+      btng.addEventListener("click", (evt) => {
+        document.querySelector("#score1").innerText = " Score : " + humanScore;
+        document.querySelector("#score2").innerText = "score : " + comScore;
+
+        if (pressCountG == 0) {
+          step1click();
+        } else if (pressCountG == 1) {
+          document.querySelector(".pressGuess").innerText = "You press G ";
+          pressCountG++;
+          pressCount += 1;
+          add(pressCount);
+        } else {
+          document.querySelector(".pressGuess").innerText =
+            "You press G \n " + pressCountG + " times ";
+          pressCountG++;
+          pressCount += 1;
+          add(pressCount);
+        }
+        resetFun();
+        document.querySelector("#attempleft").innerText =
+          "Attemp left : " + attempLeft;
+        --attempLeft;
+        console.log(pressCountG);
+
+        var cpu = Math.floor(Math.random() * 10);
+        var computerInput = [
+          "snake",
+          "water",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+        ][cpu];
+
+        console.log("user press g ");
+        console.log("cpu : " + computerInput);
+        operateHub("gun", computerInput);
+      });
+
+      btnw.addEventListener("click", (evt) => {
+        document.querySelector("#score1").innerText = " Score : " + humanScore;
+        document.querySelector("#score2").innerText = "score : " + comScore;
+
+        if (pressCountW == 0) {
+          step1click();
+        } else if (pressCountW == 1) {
+          document.querySelector(".pressGuess").innerText = "You press W ";
+          pressCountW++;
+          pressCount += 1;
+          add(pressCount);
+        } else {
+          document.querySelector(".pressGuess").innerText =
+            "You press W \n " + pressCountW + " times ";
+          pressCountW++;
+          pressCount += 1;
+          add(pressCount);
+        }
+        resetFun();
+        document.querySelector("#attempleft").innerText =
+          "Attemp left : " + attempLeft;
+        --attempLeft;
+        console.log(pressCountW);
+
+        var cpu = Math.floor(Math.random() * 10);
+        var computerInput = [
+          "snake",
+          "water",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+          "snake",
+          "gun",
+          "water",
+        ][cpu];
+
+        console.log(" user press w");
+        console.log("cpu : " + computerInput);
+        operateHub("water", computerInput);
+      });
+
+      function step1click() {
+        document.querySelector(".pressGuess").innerText = " Ready... ";
+        console.log("wating for new key press");
+        pressCountS++;
+        pressCountG++;
+        pressCountW++;
+        document.querySelector(".result").innerHTML = `Ready ${x} Ready`;
+        document.querySelector(".imgBox").style.backgroundImage =
+          'url("gameLogo.webp")';
+        document.querySelector("#imgbox").style.backgroundImage =
+          'url("gameLogo.webp")';
+      }
+
+      function add(a) {
+        let c = ++a;
+        console.log("sum : ", c);
+        if (c > 8) {
+          console.log("Execute reset button through press key");
+          resetGame();
+        }
+      }
+
+      ////////////////// Reset Fuction ////////////
+
+      function resetGame() {
+        console.log("welcome to new menu ");
+        pressCountS = 0;
+        pressCountG = 0;
+        pressCountW = 0;
+        attempLeft = 7;
+        humanScore = 0;
+        comScore = 0;
+
+        //pressCount = 0;
+
+        document.querySelector("#attempleft").innerText =
+          "Attemp left : " + attempLeft;
+
+        document.querySelector("#score1").innerText = " Score : " + humanScore;
+        document.querySelector("#score2").innerText = "score : " + comScore;
+        document.querySelector(".result").innerHTML = " welcome ";
+        document.querySelector(".pressGuess").innerText = "Press Any key S G W";
+
+        document.querySelector("#turnName").innerText = "Wait ";
+        document.querySelector("#resultEnd").innerText = "Turn End ";
+
+        document.querySelector(".imgBox").style.backgroundImage =
+          'url("gameLogo.webp")';
+        document.querySelector("#imgbox").style.backgroundImage =
+          'url("gameLogo.webp")';
+
+        console.log("refresh page ");
+        console.log("attempLeft : " + attempLeft);
+        console.log("hs : " + humanScore);
+        console.log("coms : " + comScore);
+      }
+
+      /////display result successful or not
+
+      function resetFun() {
+        console.log(" resetFun welcome to function ");
+        if (attempLeft < 1) {
+          attempLeft = 0;
+          console.log("reset");
+
+          if (humanScore > comScore) {
+            humanScore = humanScore - comScore;
+            document.querySelector("#turnName").innerText = "Human win ";
+            document.querySelector("#resultEnd").innerText =
+              humanScore + " points";
+          } else if (humanScore < comScore) {
+            comScore = comScore - humanScore;
+            document.querySelector("#turnName").innerText = "Computer win ";
+            document.querySelector("#resultEnd").innerText =
+              comScore + " points";
+          } else {
+            console.log("Match Draw");
+          }
+          btnReset.addEventListener("click", (evt) => {
+            resetGame();
+          });
+        }
+      }
+
+      ////////////////// Reset Stop ////////////
+    </script>
+  </body>
+</html>
